@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+    <rosparam file = "$(find wk3_pkg)/config/params.yaml" command = "load"   />
+    <rosparam file = "$(find wk3_pkg)/config/control_params.yaml" command = "load"   />
+    <node name="setpoint" pkg="wk3_pkg" type="Input.py" output="screen" launch-prefix="gnome-terminal --command" />
+    <node name="serial_node"        pkg="rosserial_python"      type="serial_node.py">
+    <param name="port"              type="string"               value="/dev/ttyUSB0"/>
+    <param name="baud"              type="int"                  value="57600"/>
+    </node>
+    <node name="rpm" pkg="wk3_pkg" type="controller.py" output="screen" launch-prefix="gnome-terminal --command" />
+    <node name="rqt_plot" pkg="rqt_plot" type="rqt_plot" output="screen" />
+</launch>
